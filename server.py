@@ -33,7 +33,6 @@ def connect():
     socketio.emit("device_info", data=json.dumps(active_devices_info))
 
 def handle_connect(client, userdata, flags, rc):
-    logging.error("DEBUG" + str(rc))
     if rc == 0:
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
