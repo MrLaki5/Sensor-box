@@ -32,6 +32,7 @@
                 html_item += "<li class=\"list-group-item\">Humidity: " + obj["Humidity"] + "h</li>";
                 html_item += "<li class=\"list-group-item\">PM2.5: " + obj["PM2.5"] + "</li>";
                 html_item += "<li class=\"list-group-item\">PM10: " + obj["PM10"] + "</li>";
+                html_item += "<li class=\"list-group-item\">Time: " + new Date(obj["Time"]).toLocaleString() + "</li>";
 
                 html_item += "</ul></div>"
 

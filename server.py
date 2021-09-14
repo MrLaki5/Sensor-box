@@ -2,12 +2,12 @@ import eventlet
 eventlet.monkey_patch()
 
 from flask import Flask, render_template, escape
-#from flask_mqtt import Mqtt
 from flask_socketio import SocketIO
 import paho.mqtt.client as mqtt
 import logging
 import json
 from threading import Thread
+import datetime
 
 logging.basicConfig(level=logging.INFO)
 active_devices_info = {}
@@ -26,7 +26,6 @@ class MQTT_Thread(Thread):
 			pass
 		logging.info("MQTT: Thread terminated")
 
-# mqtt = Mqtt(application)
 socketio = SocketIO(application, cors_allowed_origins="*")
 
 @socketio.on('connect')
@@ -36,9 +35,6 @@ def connect():
 def handle_connect(client, userdata, flags, rc):
     logging.error("DEBUG" + str(rc))
     if rc == 0:
-        # mqtt.subscribe('test_topic')
-        # mqtt.publish('test_topic', 'hello world')
-        
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
         client.subscribe("devices/active_report", qos=1)
@@ -60,6 +56,8 @@ def handle_mqtt_message(client, userdata, message):
         curr_device = escape(curr_device_info["box_id"])
         if curr_device not in active_devices_info:
             active_devices_info[escape(curr_device_info["box_id"])] = {}
+        utc_current_time = datetime.datetime.utcnow()
+        active_devices_info[escape(curr_device_info["box_id"])]["Time"] = utc_current_time.strftime("%Y-%m-%dT%H:%M:%SZ")
         active_devices_info[escape(curr_device_info["box_id"])]["PM10"] = escape(curr_device_info["PM10"])
         active_devices_info[escape(curr_device_info["box_id"])]["PM2.5"] = escape(curr_device_info["PM2.5"])
         active_devices_info[escape(curr_device_info["box_id"])]["Temp"] = escape(curr_device_info["Temp"])
