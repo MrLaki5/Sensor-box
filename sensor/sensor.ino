@@ -44,13 +44,13 @@ void loop()
         float humidity = dht.readHumidity();
         float temperature = dht.readTemperature();  
         
-        Serial.print("{\"concetraction PM10\": ");
+        Serial.print("{\"PM10\": ");
         Serial.print(concentration_10);
-        Serial.print(", \"concetraction PM2.5\": ");
+        Serial.print(", \"PM2.5\": ");
         Serial.print(lowpulseoccupancy_2_5);
-        Serial.print(", \"temperature\": ");
+        Serial.print(", \"Temp\": ");
         Serial.print(temperature);
-        Serial.print(" , \"humidity\": ");
+        Serial.print(" , \"Humidity\": ");
         Serial.print(humidity);
         Serial.print("}");
         Serial.println();

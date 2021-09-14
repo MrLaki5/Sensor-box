@@ -60,10 +60,10 @@ def handle_mqtt_message(client, userdata, message):
         curr_device = escape(curr_device_info["box_id"])
         if curr_device not in active_devices_info:
             active_devices_info[escape(curr_device_info["box_id"])] = {}
-            active_devices_info[escape(curr_device_info["box_id"])]["PM10"] = escape(curr_device_info["PM10"])
-            active_devices_info[escape(curr_device_info["box_id"])]["PM2.5"] = escape(curr_device_info["PM2.5"])
-            active_devices_info[escape(curr_device_info["box_id"])]["Temp"] = escape(curr_device_info["Temp"])
-            active_devices_info[escape(curr_device_info["box_id"])]["Humidity"] = escape(curr_device_info["Humidity"])
+        active_devices_info[escape(curr_device_info["box_id"])]["PM10"] = escape(curr_device_info["PM10"])
+        active_devices_info[escape(curr_device_info["box_id"])]["PM2.5"] = escape(curr_device_info["PM2.5"])
+        active_devices_info[escape(curr_device_info["box_id"])]["Temp"] = escape(curr_device_info["Temp"])
+        active_devices_info[escape(curr_device_info["box_id"])]["Humidity"] = escape(curr_device_info["Humidity"])
     elif message.topic == "devices/offline_report":
         active_devices_info.pop(curr_device, None)
     # Publish retain message of refreshed active users
@@ -90,6 +90,6 @@ if __name__ == '__main__':
     try:
         mqtt_thread = MQTT_Thread()
         mqtt_thread.start()
-        socketio.run(application, host='0.0.0.0', port=5000, use_reloader=False, debug=True)
+        socketio.run(application, host='192.168.1.104', port=5000, use_reloader=False, debug=True)
     except Exception as ex:
         client.disconnect()
