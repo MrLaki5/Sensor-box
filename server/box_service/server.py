@@ -79,7 +79,7 @@ client.on_connect = handle_connect
 client.on_message = handle_mqtt_message
 client.on_disconnect = handle_disconnect
 client.on_subscribe = handle_subscribe
-client.connect("0.0.0.0", port=1883, keepalive=60)
+client.connect("mqtt_broker", port=1883, keepalive=60)
 
 
 
@@ -87,6 +87,6 @@ if __name__ == '__main__':
     try:
         mqtt_thread = MQTT_Thread()
         mqtt_thread.start()
-        socketio.run(application, host='192.168.1.104', port=5000, use_reloader=False, debug=True)
+        socketio.run(application, host='0.0.0.0', port=80, use_reloader=False, debug=True)
     except Exception as ex:
         client.disconnect()
